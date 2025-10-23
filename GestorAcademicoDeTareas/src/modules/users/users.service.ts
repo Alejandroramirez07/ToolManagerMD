@@ -39,21 +39,20 @@ export class UsersService {
 
   // ** Professor CRUD Access: Update **
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.findOne(id);
+  const user = await this.findOne(id);
 
-    // If password is being updated, hash it
-    if (updateUserDto.password) {
-      user.passwordHash = await bcrypt.hash(updateUserDto.password, 10);
-    }
-    
-    // Merge the DTO with the entity, excluding the raw password field
-    const updatedUser = Object.assign(user, {
-        ...updateUserDto,
-        password: undefined // Ensure raw password is not saved/merged
-    });
-    
-    return this.usersRepository.save(updatedUser);
+  // If password is being updated, hash it
+  if (updateUserDto.password) {
+    user.passwordHash = await bcrypt.hash(updateUserDto.password, 10);
+    // Remove password from DTO to prevent it from being merged as plain text
+    delete updateUserDto.password;
   }
+  
+  // Merge other fields from DTO
+  Object.assign(user, updateUserDto);
+  
+  return this.usersRepository.save(user);
+}
 
   // ** Professor CRUD Access: Delete **
   async remove(id: number): Promise<void> {

@@ -8,9 +8,11 @@ import {
   LogOut,
   BookOpen
 } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 
 const Layout: React.FC = () => {
   const location = useLocation()
+  const { logout } = useAuth()
 
   const navigation = [
     { name: 'Dashboard', href: '/', icon: Home },
@@ -20,7 +22,7 @@ const Layout: React.FC = () => {
   ]
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
+    logout()
     window.location.href = '/login'
   }
 

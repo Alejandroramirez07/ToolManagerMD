@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, Eye, EyeOff } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -9,6 +10,7 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -18,24 +20,24 @@ const Login: React.FC = () => {
     try {
       // Mock authentication - replace with actual API call
       if (email === 'professor@example.com' && password === 'password') {
-        localStorage.setItem('token', 'mock-token-professor')
-        localStorage.setItem('user', JSON.stringify({
+        const user = {
           id: 1,
           email: 'professor@example.com',
           firstName: 'Professor',
           lastName: 'User',
-          role: 'Professor'
-        }))
+          role: 'Professor' as const
+        }
+        login(user, 'mock-token-professor')
         navigate('/')
       } else if (email === 'student@example.com' && password === 'password') {
-        localStorage.setItem('token', 'mock-token-student')
-        localStorage.setItem('user', JSON.stringify({
+        const user = {
           id: 2,
           email: 'student@example.com',
           firstName: 'Student',
           lastName: 'User',
-          role: 'Student'
-        }))
+          role: 'Student' as const
+        }
+        login(user, 'mock-token-student')
         navigate('/')
       } else {
         setError('Invalid email or password')

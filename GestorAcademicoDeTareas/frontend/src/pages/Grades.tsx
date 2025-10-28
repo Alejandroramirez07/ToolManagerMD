@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Plus, Edit, Trash2, TrendingUp, User } from 'lucide-react'
+import { Plus, Edit, Trash2, TrendingUp, User as UserIcon } from 'lucide-react'
 import { gradesApi, usersApi, tasksApi, Grade, CreateGradeDto, User, Task } from '../services/api'
 
 const Grades: React.FC = () => {
@@ -143,7 +143,7 @@ const Grades: React.FC = () => {
             return (
               <div key={student.id} className="border rounded-lg p-4">
                 <div className="flex items-center">
-                  <User className="h-8 w-8 text-gray-400 mr-3" />
+                  <UserIcon className="h-8 w-8 text-gray-400 mr-3" />
                   <div>
                     <h4 className="text-sm font-medium text-gray-900">
                       {student.firstName} {student.lastName}

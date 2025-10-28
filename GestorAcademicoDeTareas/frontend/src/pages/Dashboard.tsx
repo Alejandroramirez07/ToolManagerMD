@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { CheckSquare, GraduationCap, Users, TrendingUp } from 'lucide-react'
-import { tasksApi, gradesApi, usersApi, Task, Grade, User } from '../services/api'
+import { tasksApi, gradesApi, usersApi } from '../services/api.js'
+import type { Task, Grade, User } from '../services/api.js'
 
 const Dashboard: React.FC = () => {
   const [stats, setStats] = useState({
